@@ -43,6 +43,7 @@ flywayUrl := envConfig.value.getString("jdbcUrl")
 flywayUser := envConfig.value.getString("jdbcUserName")
 flywayPassword := envConfig.value.getString("jdbcPassword")
 
+TwirlKeys.templateImports ++= Seq("forms._")
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "com.example.controllers._"
