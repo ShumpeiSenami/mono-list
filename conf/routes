@@ -1,9 +1,14 @@
-
+# Home
 GET     /                           controllers.HomeController.index
+
+# SignUp
 GET     /signup                     controllers.SignUpController.index
-
-
 POST    /signup                     controllers.SignUpController.register
+
+#LogIn,LogOut
+GET     /login                      controllers.AuthController.index
+POST    /login                      controllers.AuthController.login
+POST    /logout                     controllers.AuthController.logout
 
 
 
