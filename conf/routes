@@ -10,7 +10,8 @@ GET     /login                      controllers.AuthController.index
 POST    /login                      controllers.AuthController.login
 POST    /logout                     controllers.AuthController.logout
 
-
+#RakutenAPI-Item
+GET     /items/index                controllers.ItemsController.index(keywordOpt:Option[String])
 
 
 
