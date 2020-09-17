@@ -34,8 +34,9 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a href="#">@Messages("MyPage")</a>
+                                    <a href="@routes.UsersController.show(currentUserOpt.get.id.get)">@Messages("MyPage")</a>
                                 </li>
+                                <li role="separator" class="divider"></li>
                                 <li>
                                     @* *@
                                     @b3.formCSRF(routes.AuthController.logout(), 'name -> "logout", 'style -> "display:none"){

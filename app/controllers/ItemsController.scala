@@ -48,20 +48,32 @@ class ItemsController @Inject()(val userService: UserService,
       )
   }
 
-  private def searchItems(currentUser:User,
-                          keywordOpt:Option[String]
-                         )(implicit requestHeader: RequestHeader):Future[Result] =
+  private def searchItems(currentUser: User,
+                          keywordOpt: Option[String]
+                         )(implicit requestHeader: RequestHeader): Future[Result] =
     itemService
-    .searchItems(keywordOpt)
-    .map{items =>
-      Logger.debug(s"items = $items")
-      Ok(views.html.items.index(currentUser,searchItemform.fill(keywordOpt),items))
-    }
-    .recover(recoderHandler(currentUser, keywordOpt))
+      .searchItems(keywordOpt)
+      .map { items =>
+        Logger.debug(s"items = $items")
+        Ok(views.html.items.index(currentUser, searchItemform.fill(keywordOpt), items))
+      }
+      .recover(recoderHandler(currentUser, keywordOpt))
 
-  def index(keywordOpt:Option[String]):Action[AnyContent] = AsyncStack{implicit request =>
-    searchItems(loggedIn,keywordOpt)
+  def index(keywordOpt: Option[String]): Action[AnyContent] = AsyncStack { implicit request =>
+    searchItems(loggedIn, keywordOpt)
   }
 
+  def show(id: Long): Action[AnyContent] = AsyncStack { implicit request =>
+    val user = loggedIn
+    itemService
+      .getItemById(id)
+      .map { itemOpt =>
+        itemOpt
+          .map { item =>
+            Ok(views.html.items.show(Some(user), item))
+          }
+          .getOrElse(InternalServerError(Messages("InternalError")))
+      }
+  }
 
 }
